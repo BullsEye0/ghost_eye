@@ -1,4 +1,4 @@
-# ghost_eye
+# Ghost Eye
 Ghost Eye - Information Gathering Tool
 <div>
 
