@@ -7,7 +7,7 @@ To run Ghost Eye, it only needs a domain or ip.
 Ghost Eye can work with any Linux distros if they support Python 3.
 
 
-# Ghost Eye gathers information data such as:
+## Ghost Eye gathers information data such as:
 
 1.   Whois Lookup
 2.   DNS Lookup
@@ -25,11 +25,11 @@ Ghost Eye can work with any Linux distros if they support Python 3.
 ![Screenshot](banner.jpg)
 
   
-Video demo: Watch on Youtube:
+**Video demo: Watch on Youtube:
 https://youtu.be/XCtWM-4ov2U
-</div>
 
-# Install and run on Linux
+
+## Install and run on Linux
 You have to install Python 3 first:
 <div>
   
@@ -48,7 +48,7 @@ You have to install Nmap and EtherApe too:
 
     
     
-# Install Ghost Eye:
+## Install Ghost Eye:
 * git clone https://github.com/BullsEye0/ghost_eye.git
 
 * cd ghost_eye
@@ -57,11 +57,11 @@ You have to install Nmap and EtherApe too:
 * pip3 install -r requirements.txt
 <div>
   
-# Use:
+## Use:
 * python3 ghost_eye.py
 
 
-# Contact to coder
+## Contact to coder
 Social Networks - Connect
 
 
@@ -73,4 +73,8 @@ Social Networks - Connect
 *  Youtube: https://youtu.be/XCtWM-4ov2U
 
 * Facebook Page: https://www.facebook.com/ethical.hack.group
-<div>
+  
+## Donation Button: 
+**LiberaPay**
+
+<noscript><a href="https://liberapay.com/BullsEye/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
