@@ -46,6 +46,9 @@ You have to install Nmap and EtherApe too:
   
 * On Debian and its distros: sudo apt install nmap etherape
 
+After installing Etherape sometimes a GNOME error can occur, for which you install: (This will solve the common error)
+* apt install libgnomeui-0: amd64
+
     
     
 ## Install Ghost Eye:
