@@ -55,29 +55,27 @@ After installing Etherape sometimes a GNOME error can occur, for which you insta
 * git clone https://github.com/BullsEye0/ghost_eye.git
 
 * cd ghost_eye
-
   
 * pip3 install -r requirements.txt
-<div>
+
   
 ## Use:
 * python3 ghost_eye.py
 
 
-## Contact to coder
+# Contact to coder
 Social Networks - Connect
 
+* [Facebook Personal](https://www.facebook.com/jolandadekoff)
 
-* Facebook: https://www.facebook.com/jolandadekoff
+* [linkedin](https://www.linkedin.com/in/jolandadekoff/)
 
+* [Youtube](https://youtu.be/XCtWM-4ov2U)
 
-* linkedin: https://www.linkedin.com/in/jolandadekoff/
+* [Facebook Page](https://www.facebook.com/ethical.hack.group)
 
-* Youtube: https://youtu.be/XCtWM-4ov2U
-
-* Facebook Page: https://www.facebook.com/ethical.hack.group
-
-* Facebook Group: https://www.facebook.com/groups/Ethical.Hacking.Cyber.Secure/
+* [Facebook Group](https://www.facebook.com/groups/ethical.hack.group/)
+  
   
 ## Donation Button: 
 **LiberaPay**
