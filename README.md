@@ -66,6 +66,8 @@ After installing Etherape sometimes a GNOME error can occur, for which you insta
 # Contact to coder
 Social Networks - Connect
 
+* Website [HackingPassion.com](https://hackingpassion.com)
+
 * [Facebook Personal](https://www.facebook.com/jolandadekoff)
 
 * [linkedin](https://www.linkedin.com/in/jolandadekoff/)
@@ -80,6 +82,7 @@ Social Networks - Connect
 
 ## Buy me a coffee
 I have developed Ghost Eye because I am passionate about this. 
+
 Donations are one of the many ways to support what I do.
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R96YN2PUS8V8W)
