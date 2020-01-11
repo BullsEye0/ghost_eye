@@ -37,6 +37,7 @@ import time
 from time import gmtime, strftime
 from urllib.error import URLError
 from urllib.parse import urlsplit
+import urllib3
 import urllib.request
 from urllib.request import urlopen
 
