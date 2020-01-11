@@ -4,15 +4,25 @@
 # ===== #
 # Jolanda de Koff
 # Bulls Eye: https://github.com/BullsEye0
-# linkedin: https://www.linkedin.com/in/jolandadekoff/
-# facebook.com/jolandadekoff
-# Youtube: https://youtu.be/XCtWM-4ov2U
-# https://www.facebook.com/ethical.hack.group/
+# Website: https://hackingpassion.com
+# linkedin: https://www.linkedin.com/in/jolandadekoff
+# Facebook: facebook.com/jolandadekoff
+# Facebook Page: https://www.facebook.com/ethical.hack.group
+# Facebook Group: https://www.facebook.com/groups/hack.passion/
+# YouTube: https://www.youtube.com/BullsEyeJolandadeKoff
 # ===== #
 
 # ===== #
-# Created July 2019 | Copyright (c)2019 Jolanda de Koff.
+# Created July 2019 | Copyright (c) 2019 - 2020 Jolanda de Koff.
 # ===== #
+
+########################################################################
+
+# A notice to all nerds and n00bs...
+# If you will copy the developer's work it will not make you a hacker..!
+# Respect all developers, we doing this because it's fun...
+
+########################################################################
 
 
 from bs4 import BeautifulSoup
@@ -45,6 +55,7 @@ def banner():
             \033[1;m
         \033[34mGhost Eye - Information Gathering Tool \033[0m
         \033[34mAuthor: Jolanda de Koff https://github.com/BullsEye0 | Bulls Eye \033[0m
+        \033[34mWebsite: https://hackingpassion.com \033[0m
 
               Hi there, Shall we play a game..? """)
 
