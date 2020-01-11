@@ -6,6 +6,13 @@ Ghost Eye is an Information Gathering Tool I made in python 3.
 To run Ghost Eye, it only needs a domain or ip.
 Ghost Eye can work with any Linux distros if they support Python 3.
 
+****
+Here you can read an article i wrote about Ghost Eye
+
+https://hackingpassion.com/getting-started-with-ghost-eye/
+
+****
+
 
 ## Ghost Eye gathers information data such as:
 
@@ -22,7 +29,7 @@ Ghost Eye can work with any Linux distros if they support Python 3.
 11.  Have I been pwned
 12.  Exit
 
-![Screenshot](banner.jpg)
+![Screenshot](ghost-eye.png)
 
   
 **Video demo: Watch on Youtube:
