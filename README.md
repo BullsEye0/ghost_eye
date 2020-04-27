@@ -45,13 +45,13 @@ You have to install Python 3 first:
 
  
  
-You have to install Nmap and EtherApe too:
+You have to install HTTPie, Nmap and EtherApe too:
 
   
-* On Arch Linux and its distros: sudo pacman -S nmap etherape
+* On Arch Linux and its distros: sudo pacman -S nmap etherape httpie
 
-  
-* On Debian and its distros: sudo apt install nmap etherape
+
+* On Debian and its distros: sudo apt install nmap etherape httpie
 
 After installing Etherape sometimes a GNOME error can occur, for which you install: (This will solve the common error)
 * apt install libgnomeui-0: amd64
