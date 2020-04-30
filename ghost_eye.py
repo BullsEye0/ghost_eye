@@ -18,8 +18,8 @@
 
 ########################################################################
 
-# A notice to all nerds and n00bs...
-# If you will copy the developer's work it will not make you a hacker..!
+# A notice to all nerds and noobs...
+# If you copy the developer's work it will not make you a hacker..!
 # Respect all developers, we doing this because it's fun...
 
 ########################################################################
@@ -73,14 +73,15 @@ def menu():
     print("\033[1;34m[+] 9.   IP Location Finder\033[1;m")
     print("\033[1;34m[+] 10.  Traceroute\033[1;m")
     print("\033[1;34m[+] 11.  Have I been pwned\033[1;m")
-    print("\033[1;34m[x] 12.  Exit\033[1;m\n")
+    print("\033[1;34m[+] 12.  Trace out IP\033[1;m")
+    print("\033[1;34m[x] 13.  Exit\033[1;m\n")
 
 
 def fun():
     choice = ("1")
     banner()
 
-    while choice != ("12"):
+    while choice != ("13"):
         menu()
         choice = input("\033[1;34m[+]\033[1;m \033[1;91mEnter your choice:\033[1;m ")
 
@@ -91,8 +92,8 @@ def fun():
                 print("\033[34mSearching for... Whois Lookup: \033[0m".format(target) + target)
                 time.sleep(1.5)
                 command = ("whois " + target)
-                proces = os.popen(command)
-                results = str(proces.read())
+                process = os.popen(command)
+                results = str(process.read())
                 print("\033[1;34m" + results + command + "\033[1;m")
 
             except Exception:
@@ -313,8 +314,23 @@ def fun():
 
             except Exception:
                 print(" \033[1;91mUnable to reach HaveIBeenPwned\033[0m")
+        
+        elif choice == ("12")
+            try:
+                target = input("\033[1;91mEnter IP Address: \033[1;m").lower()
+                os.system("reset")
+                print("\033[34mTracing out for...: \033[0m".format(target) + target)
+                time.sleep(1.5)
+                command = ("traceroute " + target)
+                process = os.popen(command)
+                results = str(process.read())
+                print("\033[1;34m" + results + command + "\033[1;m")
 
-        elif choice == ("12"):
+            except Exception:
+                pass
+        
+
+        elif choice == ("13"):
             time.sleep(1)
             print("\n\t\033[34mBlue Eye\033[0m DONE... Exiting... \033[34mLike to See Ya Hacking Anywhere ..!\033[0m\n")
 
