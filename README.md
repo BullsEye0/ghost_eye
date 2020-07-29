@@ -87,10 +87,18 @@ Social Networks - Connect
   
   
 
-## Buy me a coffee
-I have developed Ghost Eye because I am passionate about this. 
 
+***
+
+## Donate
+
+
+I have developed Ghost Eye because I am passionate about this. 
 Donations are one of the many ways to support what I do.
+
+[Donate](https://bullseye0.com/donate)
+
+BAT: Use [Brave](https://brave.com/bul891) and donate on any of my web pages/profiles
 
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R96YN2PUS8V8W)
 
