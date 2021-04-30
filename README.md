@@ -66,7 +66,7 @@ sudo pacman -S etherape nmap dnsutils gnome-terminal httpie mtr
 ```
 
   
-* On Debian and its distros: 
+* On Debian and its distros (Kali Linux, Parrot Security OS): 
 ```
 sudo apt install etherape nmap dnsutils gnome-terminal httpie mtr
 ```
