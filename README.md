@@ -51,7 +51,8 @@ Hi there, Shall we play a game..? 😃
 ![Screenshot](featured-image.png)
 
   
-**Video demo: Watch on LBRY/Odysee
+## Video demo: Watch on LBRY/Odysee
+
 **[Video](https://open.lbry.com/@hackingpassion:9/Ghost-Eye-Informationgathering-Footprinting-Scanner-and-Recon-Tool-Release:3)**
 
 
