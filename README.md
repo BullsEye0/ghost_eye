@@ -30,7 +30,7 @@ Hi there, Shall we play a game..? 😃
 
 [+] 7.   Robots.txt Scanner
 
-[+] 8.   Cloudflare Cookie scraperRobots.txt
+[+] 8.   Cloudflare Cookie scraper
 
 [+] 9.   Link Grabber
 
@@ -52,7 +52,7 @@ Hi there, Shall we play a game..? 😃
 
   
 **Video demo: Watch on LBRY/Odysee
-
+**[Video](https://open.lbry.com/@hackingpassion:9/Ghost-Eye-Informationgathering-Footprinting-Scanner-and-Recon-Tool-Release:3)**
 
 
 ## Install and run on Linux
