@@ -1,4 +1,6 @@
 beautifulsoup4
+cfscrape
 python-nmap
 requests
 urllib3
+webtech
