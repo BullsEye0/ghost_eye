@@ -7,7 +7,7 @@ Ghost Eye - Information Gathering Tool
 ****
 Here you can read an article i wrote about Ghost Eye
 
-https://hackingpassion.com//ghost-eye-informationgathering-footprinting-and-reconnaissance-tool-release/
+https://hackingpassion.com/ghost-eye-informationgathering-footprinting-and-reconnaissance-tool-release/
 
 ****
 
