@@ -78,6 +78,7 @@ def banner():
         \033[34mAuthor: Jolanda de Koff aka Bulls Eye \033[0m
         \033[34mGithub:  https://github.com/BullsEye0 \033[0m
         \033[34mWebsite: https://hackingpassion.com \033[0m
+        \033[34mPatreon: https://www.patreon.com/jolandadekoff \033[0m
 
               Hi there, Shall we play a game..? 😃 """)
 
