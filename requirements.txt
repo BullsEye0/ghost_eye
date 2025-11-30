@@ -1,5 +1,5 @@
 beautifulsoup4
-cfscrape
+cloudscraper
 python-nmap
 requests
 urllib3
