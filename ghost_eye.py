@@ -39,7 +39,7 @@
 ########################################################################
 
 from bs4 import BeautifulSoup
-import cfscrape
+import cloudscraper as cfscrape
 from collections import deque
 import json
 import nmap
