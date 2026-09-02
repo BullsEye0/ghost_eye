@@ -50,6 +50,8 @@ import requests
 import requests.exceptions
 import requests as res
 from requests import get
+import socket
+import ssl
 import sys
 import time
 from time import gmtime, strftime
@@ -60,6 +62,25 @@ import urllib.request
 from urllib.request import urlopen
 import urllib.parse
 import webtech
+
+
+########################################################################
+# Logging helper - saves scan output to the logs/ folder so results
+# aren't lost when the terminal is cleared/reset between scans.
+########################################################################
+
+def save_log(feature_name, target, content):
+    try:
+        if not os.path.isdir("logs"):
+            os.makedirs("logs")
+        safe_target = re.sub(r"[^a-zA-Z0-9_.-]", "_", target) if target else "output"
+        timestamp = strftime("%Y-%m-%d_%H-%M-%S", gmtime())
+        filename = "logs/{0}-{1}-{2}.log".format(feature_name, safe_target, timestamp)
+        with open(filename, "w", encoding="utf-8") as log_file:
+            log_file.write(content)
+        print("\033[1;32m[+] Results saved to {0}\033[1;m".format(filename))
+    except Exception as ex:
+        print("\033[1;31m[-] Could not save log: {0}\033[1;m".format(str(ex)))
 
 
 def banner():
@@ -98,7 +119,14 @@ def menu():
     print("\033[1;34m[+] 12.  Traceroute\033[1;m")
     print("\033[1;34m[+] 13.  Crawler target url + Robots.txt\033[1;m")
     print("\033[1;34m[+] 14.  Certificate Transparency log monitor\033[1;m")
-    print("\033[1;34m[x] 15.  Exit\033[1;m\n")
+    print("\033[1;34m[+] 15.  DNS Records Lookup (A/AAAA/MX/NS/TXT/SOA/CNAME)\033[1;m")
+    print("\033[1;34m[+] 16.  Subdomain Enumeration\033[1;m")
+    print("\033[1;34m[+] 17.  SSL/TLS Certificate Info\033[1;m")
+    print("\033[1;34m[+] 18.  Security Headers Analyzer\033[1;m")
+    print("\033[1;34m[+] 19.  WAF / CDN Detection\033[1;m")
+    print("\033[1;34m[+] 20.  Port Banner Grabber\033[1;m")
+    print("\033[1;34m[+] 21.  Email Harvester\033[1;m")
+    print("\033[1;34m[x] 22.  Exit\033[1;m\n")
 
 
 def fun():
@@ -393,8 +421,229 @@ def fun():
              	pass
 
         elif choice == ("15"):
+            try:
+                target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower().strip()
+                os.system("reset")
+                print("\033[34m[~] DNS Records Lookup: \033[0m" + target)
+                time.sleep(1)
+
+                record_types = ["A", "AAAA", "MX", "NS", "TXT", "SOA", "CNAME"]
+                output = ""
+                for rtype in record_types:
+                    print("\n\033[1;34m[+] " + rtype + " Records:\033[1;m")
+                    command = "dig " + target + " " + rtype + " +short"
+                    proces = os.popen(command)
+                    results = str(proces.read()).strip()
+                    if results:
+                        print(results)
+                    else:
+                        print("\033[1;33m[-] No " + rtype + " records found\033[1;m")
+                    output += rtype + " Records:\n" + results + "\n\n"
+
+                save_log("dns-records", target, output)
+
+            except Exception as ex:
+                print("\033[1;34mException caught: " + str(ex))
+
+        elif choice == ("16"):
+            try:
+                target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower().strip()
+                os.system("reset")
+                print("\033[34m[~] Enumerating Subdomains via Certificate Transparency logs: \033[0m" + target)
+                print("This will take a moment... Get some coffee 😃\n")
+                time.sleep(1.5)
+
+                headers = {"User-Agent": "Mozilla/5.0"}
+                url = "https://crt.sh/?q=%25." + target + "&output=json"
+                response = requests.get(url, headers=headers, timeout=15)
+                subdomains = set()
+
+                if response.status_code == 200 and response.text.strip():
+                    entries = json.loads(response.text)
+                    for entry in entries:
+                        name_value = entry.get("name_value", "")
+                        for name in name_value.split("\n"):
+                            name = name.strip().lstrip("*.")
+                            if name and target in name:
+                                subdomains.add(name)
+
+                if subdomains:
+                    sorted_subs = sorted(subdomains)
+                    for sub in sorted_subs:
+                        print("\033[34m[+] \033[0m" + sub)
+                    print("\n\033[1;32m[+] Found " + str(len(sorted_subs)) + " unique subdomains\033[1;m")
+                    save_log("subdomains", target, "\n".join(sorted_subs))
+                else:
+                    print("\033[1;31m[-] No subdomains found or crt.sh unreachable\033[1;m")
+
+            except Exception as ex:
+                print("\033[1;34mException caught: " + str(ex))
+
+        elif choice == ("17"):
+            try:
+                target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower().strip()
+                target = target.replace("http://", "").replace("https://", "").split("/")[0]
+                os.system("reset")
+                print("\033[34m[~] Fetching SSL/TLS Certificate Info: \033[0m" + target)
+                time.sleep(1.5)
+
+                context = ssl.create_default_context()
+                with socket.create_connection((target, 443), timeout=10) as sock:
+                    with context.wrap_socket(sock, server_hostname=target) as ssock:
+                        cert = ssock.getpeercert()
+
+                output_lines = []
+                subject = dict(x[0] for x in cert.get("subject", []))
+                issuer = dict(x[0] for x in cert.get("issuer", []))
+                output_lines.append("Subject CN: " + subject.get("commonName", "N/A"))
+                output_lines.append("Issuer: " + issuer.get("commonName", "N/A") + " (" + issuer.get("organizationName", "N/A") + ")")
+                output_lines.append("Valid From: " + cert.get("notBefore", "N/A"))
+                output_lines.append("Valid Until: " + cert.get("notAfter", "N/A"))
+                output_lines.append("Serial Number: " + cert.get("serialNumber", "N/A"))
+                san = cert.get("subjectAltName", [])
+                if san:
+                    output_lines.append("Subject Alt Names: " + ", ".join([s[1] for s in san]))
+
+                for line in output_lines:
+                    print("\033[34m[+] \033[0m" + line)
+
+                save_log("ssl-cert", target, "\n".join(output_lines))
+
+            except Exception as ex:
+                print("\033[1;31m[-] Could not retrieve certificate: " + str(ex) + "\033[1;m")
+
+        elif choice == ("18"):
+            try:
+                target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower().strip()
+                if not (target.startswith("http://") or target.startswith("https://")):
+                    target = "https://" + target
+                os.system("reset")
+                print("\033[34m[~] Analyzing Security Headers: \033[0m" + target)
+                time.sleep(1.5)
+
+                resp = requests.get(target, timeout=10)
+                headers = resp.headers
+
+                security_headers = {
+                    "Strict-Transport-Security": "Protects against protocol downgrade / cookie hijacking",
+                    "Content-Security-Policy": "Mitigates XSS and data injection attacks",
+                    "X-Content-Type-Options": "Prevents MIME-type sniffing",
+                    "X-Frame-Options": "Protects against Clickjacking",
+                    "Referrer-Policy": "Controls how much referrer info is sent",
+                    "Permissions-Policy": "Controls which browser features can be used",
+                }
+
+                output_lines = []
+                for header, description in security_headers.items():
+                    if header in headers:
+                        line = "[PRESENT] " + header + " -> " + headers[header]
+                        print("\033[1;32m[+] " + header + "\033[0m: " + headers[header])
+                    else:
+                        line = "[MISSING] " + header + " -> " + description
+                        print("\033[1;31m[-] " + header + " is MISSING\033[0m (" + description + ")")
+                    output_lines.append(line)
+
+                save_log("security-headers", target, "\n".join(output_lines))
+
+            except Exception as ex:
+                print("\033[1;34mException caught: " + str(ex))
+
+        elif choice == ("19"):
+            try:
+                target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower().strip()
+                if not (target.startswith("http://") or target.startswith("https://")):
+                    target = "https://" + target
+                os.system("reset")
+                print("\033[34m[~] Detecting WAF / CDN: \033[0m" + target)
+                time.sleep(1.5)
+
+                resp = requests.get(target, timeout=10)
+                headers = resp.headers
+                cookies = resp.cookies
+                header_blob = json.dumps(dict(headers)).lower()
+                cookie_blob = " ".join(cookies.keys()).lower()
+
+                signatures = {
+                    "Cloudflare": ["cloudflare", "cf-ray", "__cfduid", "cf_clearance"],
+                    "Akamai": ["akamai", "akamaighost"],
+                    "Sucuri": ["sucuri", "x-sucuri-id"],
+                    "Imperva / Incapsula": ["incap_ses", "visid_incap", "incapsula"],
+                    "AWS WAF / CloudFront": ["x-amz-cf-id", "cloudfront"],
+                    "Fastly": ["fastly"],
+                    "F5 BIG-IP ASM": ["bigipserver", "f5"],
+                    "ModSecurity": ["mod_security", "modsecurity"],
+                }
+
+                detected = []
+                for waf_name, sigs in signatures.items():
+                    for sig in sigs:
+                        if sig in header_blob or sig in cookie_blob:
+                            detected.append(waf_name)
+                            break
+
+                if detected:
+                    for waf_name in detected:
+                        print("\033[1;32m[+] Detected: \033[0m" + waf_name)
+                    save_log("waf-detection", target, "\n".join(detected))
+                else:
+                    print("\033[1;33m[-] No known WAF/CDN signatures detected\033[1;m")
+
+            except Exception as ex:
+                print("\033[1;34mException caught: " + str(ex))
+
+        elif choice == ("20"):
+            try:
+                target = input("\033[1;91m[+] Enter Domain or IP Address: \033[1;m").lower().strip()
+                port_input = input("\033[1;91m[+] Enter Port (default 80): \033[1;m").strip()
+                port = int(port_input) if port_input else 80
+                os.system("reset")
+                print("\033[34m[~] Grabbing Banner: \033[0m" + target + ":" + str(port))
+                time.sleep(1.5)
+
+                with socket.create_connection((target, port), timeout=5) as sock:
+                    try:
+                        if port in (80, 8080, 8000):
+                            sock.send(b"HEAD / HTTP/1.1\r\nHost: " + target.encode() + b"\r\n\r\n")
+                        banner = sock.recv(1024).decode(errors="ignore").strip()
+                    except Exception:
+                        banner = ""
+
+                if banner:
+                    print("\033[34m[+] Banner: \033[0m\n" + banner)
+                    save_log("banner-grab", target + "_" + str(port), banner)
+                else:
+                    print("\033[1;33m[-] No banner received (port may be closed or filtered)\033[1;m")
+
+            except Exception as ex:
+                print("\033[1;31m[-] Could not connect: " + str(ex) + "\033[1;m")
+
+        elif choice == ("21"):
+            try:
+                target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower().strip()
+                if not (target.startswith("http://") or target.startswith("https://")):
+                    target = "http://" + target
+                os.system("reset")
+                print("\033[34m[~] Harvesting Emails from: \033[0m" + target)
+                time.sleep(1.5)
+
+                resp = requests.get(target, timeout=10)
+                email_regex = re.compile(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")
+                emails = sorted(set(email_regex.findall(resp.text)))
+
+                if emails:
+                    for email in emails:
+                        print("\033[34m[+] \033[0m" + email)
+                    print("\n\033[1;32m[+] Found " + str(len(emails)) + " unique email addresses\033[1;m")
+                    save_log("email-harvest", target, "\n".join(emails))
+                else:
+                    print("\033[1;33m[-] No email addresses found on this page\033[1;m")
+
+            except Exception as ex:
+                print("\033[1;34mException caught: " + str(ex))
+
+        elif choice == ("22"):
             time.sleep(1)
-            print("\n\t\033[34mBlue Eye\033[0m DONE... Exiting... \033[34mLike to See Ya Hacking Anywhere ..!\033[0m\n")
+            print("\n\t\033[34mGhost Eye\033[0m DONE... Exiting... \033[34mLike to See Ya Hacking Anywhere ..!\033[0m\n")
             sys.exit()
 
         else:

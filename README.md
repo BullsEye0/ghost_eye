@@ -1,6 +1,8 @@
 # Ghost Eye
 Ghost Eye - Information Gathering Tool
 
+> ⚠️ **Legal & Ethical Use**: Ghost Eye is intended for authorized security testing, bug bounty programs, and educational purposes only. Only scan domains, IPs, or systems you own or have explicit written permission to test. Unauthorized scanning may violate computer misuse laws in your jurisdiction.
+
 **Ghost Eye** New Release. Ghost Eye is an Information Gathering, Footprinting, Scanner, and Recon Tool I made in Python 3. Since the last release of Ghost Eye, I've tweaked, removed, and added some new features. So that Ghost Eye would become more of a whole. For me, it remains a game of options so that together you get a complete overview of your target.
 ****
 Here you can read an article i wrote about Ghost Eye
@@ -36,12 +38,41 @@ Hi there, Shall we play a game..? 😃
 
 [+] 14.  Certificate Transparency log monitor
 
-[x] 15.  Exit
+[+] 15.  DNS Records Lookup (A/AAAA/MX/NS/TXT/SOA/CNAME)
+
+[+] 16.  Subdomain Enumeration (Certificate Transparency based)
+
+[+] 17.  SSL/TLS Certificate Info
+
+[+] 18.  Security Headers Analyzer
+
+[+] 19.  WAF / CDN Detection
+
+[+] 20.  Port Banner Grabber
+
+[+] 21.  Email Harvester
+
+[x] 22.  Exit
 
 [+] Enter your choice:
 
 ![Screenshot](featured-image.png)
-  
+
+## 🆕 What's new in this fork/update
+
+This version adds seven new reconnaissance modules on top of the original tool, plus automatic result logging:
+
+* **DNS Records Lookup** – pulls A, AAAA, MX, NS, TXT, SOA, and CNAME records for a domain in one go.
+* **Subdomain Enumeration** – passively discovers subdomains by querying Certificate Transparency logs (crt.sh), no brute force or noisy traffic involved.
+* **SSL/TLS Certificate Info** – shows issuer, subject, validity dates, serial number, and Subject Alternative Names for a target's certificate.
+* **Security Headers Analyzer** – checks for the presence of key hardening headers (HSTS, CSP, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy) and explains what each one protects against.
+* **WAF / CDN Detection** – fingerprints common WAF/CDN providers (Cloudflare, Akamai, Sucuri, Imperva/Incapsula, AWS CloudFront, Fastly, F5 BIG-IP ASM, ModSecurity) from response headers and cookies.
+* **Port Banner Grabber** – opens a TCP connection to a chosen host/port and grabs the service banner.
+* **Email Harvester** – extracts publicly listed email addresses found on a target page.
+* **Automatic logging** – results from the new modules are saved as timestamped files under `logs/` so you can review or diff scans later.
+
+All new modules are passive/read-only information-gathering techniques, consistent with the rest of Ghost Eye — intended for authorized security assessments, bug bounty recon, and educational use only.
+
 ## Video demo: Watch on LBRY/Odysee
 **[Video](https://open.lbry.com/@hackingpassion:9/Ghost-Eye-Informationgathering-Footprinting-Scanner-and-Recon-Tool-Release:3)**
 

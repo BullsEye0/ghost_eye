@@ -1,6 +1,7 @@
-beautifulsoup4
-cloudscraper
-python-nmap
-requests
-urllib3
-webtech
+beautifulsoup4>=4.11.0
+cloudscraper>=1.2.71
+lxml>=4.9.0
+python-nmap>=0.7.1
+requests>=2.28.0
+urllib3>=1.26.0
+webtech>=1.4.0
