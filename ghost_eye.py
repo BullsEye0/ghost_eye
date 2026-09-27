@@ -1,4 +1,4 @@
-#!/usr/bin/env/python3
+#!/usr/bin/env python3
 # This Python file uses the following encoding: utf-8
 
 # ===== #
@@ -105,7 +105,7 @@ def fun():
     choice = ("1")
     banner()
 
-    while choice != ("12"):
+    while choice != ("15"):
         menu()
         choice = input("\033[1;34m[+]\033[1;m \033[1;91mEnter your choice:\033[1;m ")
 
@@ -327,9 +327,8 @@ def fun():
                 os.system("reset")
                 print("\033[34m[~] Detecting CMS with Identified Technologies and Custom Headers from target url: \033[0m")
                 time.sleep(5)
-                command = ("mtr " + "-4 -rwc 1 " + target)
                 obj = webtech.WebTech()
-                results = obj.start_from_url(target, timeout=1)
+                results = obj.start_from_url(target, timeout=10)
                 sys.stdout.write(results)
 
             except Exception:
@@ -377,24 +376,30 @@ def fun():
              	pass
 
         elif choice == ("14"):
-            target = input("\033[1;91m[+] Enter Domain: \033[0m")
-            os.system("reset")
-            print("\033[34m[~] Scanning Certificate Transparency log monitor: \033[0m\n" + target)
-            time.sleep(1.5)
-            print("[+] Target: " + target)
-            try:
-            	headers = {
-            	'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36', }
-            	results = requests.get('https://api.certspotter.com/v1/issuances?domain='+target+'&expand=dns_names&expand=issuer&expand=cert | jq ".[].dns_names[]" | sed "s/\"//g" | sed "s/\*\.//g" | sort -u | grep '+target,headers=headers)
-            	results = results.text.split('\n')
-            	print(*results, sep = "\n")
+			target = input("\033[1;91m[+] Enter Domain: \033[0m")
+			os.system("reset")
+			print("\033[34m[~] Scanning Certificate Transparency log monitor: \033[0m\n" + target)
+			time.sleep(1.5)
+			print("[+] Target: " + target)
+			try:
+				headers = {
+				'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36', }
+				results = requests.get('https://api.certspotter.com/v1/issuances?domain=' + target + '&expand=dns_names&expand=issuer&expand=cert', headers=headers)
+				names = set()
+				for issuance in results.json():
+					for name in issuance.get('dns_names', []):
+						name = name.lstrip('*.')
+						if target in name:
+							names.add(name)
+				for name in sorted(names):
+					print(name)
 
-            except KeyError:
-             	pass
+			except KeyError:
+				pass
 
         elif choice == ("15"):
             time.sleep(1)
-            print("\n\t\033[34mBlue Eye\033[0m DONE... Exiting... \033[34mLike to See Ya Hacking Anywhere ..!\033[0m\n")
+            print("\n\t\033[34mGhost Eye\033[0m DONE... Exiting... \033[34mLike to See Ya Hacking Anywhere ..!\033[0m\n")
             sys.exit()
 
         else:
