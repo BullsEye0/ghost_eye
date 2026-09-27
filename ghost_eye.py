@@ -28,13 +28,15 @@
 
 ########################################################################
 
+# install etherape
+# install nmap
 # install dnsutils
 # install gnome-terminal
 # install httpie
 # install mtr
 
-# sudo apt install dnsutils gnome-terminal httpie mtr
-# sudo pacman -S dnsutils gnome-terminal httpie mtr
+# sudo apt install etherape nmap dnsutils gnome-terminal httpie mtr
+# sudo pacman -S etherape nmap dnsutils gnome-terminal httpie mtr
 
 ########################################################################
 
@@ -142,7 +144,7 @@ def fun():
 		elif choice == ("1"):
 			try:
 				os.system("reset")
-				os.system("gnome-terminal -e 'bash -c \"sudo etherape; exec bash\"'")
+				os.system("gnome-terminal -- bash -c \"sudo etherape; exec bash\"")
 
 			except Exception:
 				pass
