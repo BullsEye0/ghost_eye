@@ -229,27 +229,27 @@ def fun():
         elif choice == ("8"):
             target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower()
             if not (target.startswith("http://") or target.startswith("https://")):
-              	target = "http://" + target
+                target = "http://" + target
             os.system("reset")
             print("[+] Cloudflare cookie scraper ")
             time.sleep(1.5)
 
             sess = cfscrape.create_scraper()
             try:
-            	print("[+] Target: " + target)
-            	request = "GET / HTTP/1.1\r\n"
-            	cookie_value, user_agent = cfscrape.get_cookie_string(target)
-            	request += "Cookie: %s\r\nUser_Agent: %s\r\n" % (cookie_value, user_agent)
-            	data = sess.get(target)
-            	out = BeautifulSoup(data.content,'html.parser')
-            	print("[+] Print Cookie\n")
-            	print(request)
-            	os.system('tput setaf 10')
-            	print("\n[+] Scraper ")
-            	print(out)
+                print("[+] Target: " + target)
+                request = "GET / HTTP/1.1\r\n"
+                cookie_value, user_agent = cfscrape.get_cookie_string(target)
+                request += "Cookie: %s\r\nUser_Agent: %s\r\n" % (cookie_value, user_agent)
+                data = sess.get(target)
+                out = BeautifulSoup(data.content,'html.parser')
+                print("[+] Print Cookie\n")
+                print(request)
+                os.system('tput setaf 10')
+                print("\n[+] Scraper ")
+                print(out)
 
             except ValueError:
-            	print('[X] Unable to find Cloudflare cookies. This website does not have Cloudflare IUAM enabled.')
+                print('[X] Unable to find Cloudflare cookies. This website does not have Cloudflare IUAM enabled.')
 
         elif choice == ("9"):
             try:
@@ -323,7 +323,7 @@ def fun():
             try:
                 target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower()
                 if not (target.startswith("http://") or target.startswith("https://")):
-                 	target = "https://" + target
+                    target = "https://" + target
                 os.system("reset")
                 print("\033[34m[~] Detecting CMS with Identified Technologies and Custom Headers from target url: \033[0m")
                 time.sleep(5)
@@ -348,7 +348,7 @@ def fun():
                 fun()
 
             except KeyError:
-             	pass
+                pass
 
         elif choice == ("13"):
             target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower()
@@ -357,45 +357,45 @@ def fun():
             time.sleep(5)
             print("[+] Target: " + target)
             if not (target.startswith("http://") or target.startswith("https://")):
-            	target = "http://" + target
+                target = "http://" + target
             try:
-            	content = get(target).text
-            	regex_t = re.compile(r"<title>(.*?)<\/title>")
-            	tit = re.findall(regex_t, content)
+                content = get(target).text
+                regex_t = re.compile(r"<title>(.*?)<\/title>")
+                tit = re.findall(regex_t, content)
 
-            	regex_l = re.compile(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
-            	link = re.findall(regex_l, content)
+                regex_l = re.compile(r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
+                link = re.findall(regex_l, content)
 
-            	robots = get(target + "/robots.txt").text
+                robots = get(target + "/robots.txt").text
 
-            	print("[+] Title: "+ ''.join(tit) + "\n")
-            	print("[+] Extract links: \n" + '\n'.join(link) + "\n")
-            	print("[+] Robots.txt: \n" + robots)
+                print("[+] Title: "+ ''.join(tit) + "\n")
+                print("[+] Extract links: \n" + '\n'.join(link) + "\n")
+                print("[+] Robots.txt: \n" + robots)
 
             except KeyError:
-             	pass
+                pass
 
         elif choice == ("14"):
-			target = input("\033[1;91m[+] Enter Domain: \033[0m")
-			os.system("reset")
-			print("\033[34m[~] Scanning Certificate Transparency log monitor: \033[0m\n" + target)
-			time.sleep(1.5)
-			print("[+] Target: " + target)
-			try:
-				headers = {
-				'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36', }
-				results = requests.get('https://api.certspotter.com/v1/issuances?domain=' + target + '&expand=dns_names&expand=issuer&expand=cert', headers=headers)
-				names = set()
-				for issuance in results.json():
-					for name in issuance.get('dns_names', []):
-						name = name.lstrip('*.')
-						if target in name:
-							names.add(name)
-				for name in sorted(names):
-					print(name)
+            target = input("\033[1;91m[+] Enter Domain: \033[0m")
+            os.system("reset")
+            print("\033[34m[~] Scanning Certificate Transparency log monitor: \033[0m\n" + target)
+            time.sleep(1.5)
+            print("[+] Target: " + target)
+            try:
+                headers = {
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36', }
+                results = requests.get('https://api.certspotter.com/v1/issuances?domain=' + target + '&expand=dns_names&expand=issuer&expand=cert', headers=headers)
+                names = set()
+                for issuance in results.json():
+                    for name in issuance.get('dns_names', []):
+                        name = name.lstrip('*.')
+                        if target in name:
+                            names.add(name)
+                for name in sorted(names):
+                    print(name)
 
-			except KeyError:
-				pass
+            except KeyError:
+                pass
 
         elif choice == ("15"):
             time.sleep(1)
