@@ -116,7 +116,7 @@ def fun():
 		if choice == ("3"):
 			try:
 				target = input("\033[1;91m[+] Enter Domain or IP Address: \033[1;m").lower()
-				os.system("reset")
+				os.system("reset -Q")
 				print("\033[34m[~] Searching for Whois Lookup: \033[0m".format(target) + target)
 				time.sleep(1.5)
 				command = ("whois " + target)
@@ -130,7 +130,7 @@ def fun():
 		elif choice == ("2"):
 			try:
 				target = input("\033[1;91m[+] Enter Domain or IP Address: \033[1;m").lower()
-				os.system("reset")
+				os.system("reset -Q")
 				print("\033[34m[~] Searching for DNS Lookup: \033[0m".format(target) + target)
 				time.sleep(1.5)
 				command = ("dig " + target + " +trace ANY")
@@ -143,7 +143,7 @@ def fun():
 
 		elif choice == ("1"):
 			try:
-				os.system("reset")
+				os.system("reset -Q")
 				os.system("gnome-terminal -- bash -c \"sudo etherape; exec bash\"")
 
 			except Exception:
@@ -152,7 +152,7 @@ def fun():
 		elif choice == ("4"):
 			try:
 				target = input("\033[1;91m[+] Enter Domain or IP Address: \033[1;m").lower()
-				os.system("reset")
+				os.system("reset -Q")
 				print("\033[34m[~] Scanning Nmap Port Scan: \033[0m" + target)
 				print("This will take a moment... Get some coffee 😃 )\n")
 				time.sleep(1.5)
@@ -174,7 +174,7 @@ def fun():
 		elif choice == ("5"):
 			try:
 				target = input("\033[1;91m[+] Enter Domain or IP Address: \033[1;m").lower()
-				os.system("reset")
+				os.system("reset -Q")
 				print("\033[34m[~] Scanning HTTP Header Grabber: \033[0m\n" + target)
 				time.sleep(1.5)
 				command = ("http -v " + target)
@@ -187,7 +187,7 @@ def fun():
 
 		elif choice == ("6"):
 			target = input("\033[1;91m[+] Enter the Domain to test: \033[1;m").lower()
-			os.system("reset")
+			os.system("reset -Q")
 
 			if not (target.startswith("http://") or target.startswith("https://")):
 				target = "http://" + target
@@ -213,7 +213,7 @@ def fun():
 		elif choice == ("7"):
 			try:
 				target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower()
-				os.system("reset")
+				os.system("reset -Q")
 				print("\033[34m[~] Scanning Robots.txt Scanner: \033[0m\n" + target)
 				time.sleep(1.5)
 
@@ -234,7 +234,7 @@ def fun():
 			target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower()
 			if not (target.startswith("http://") or target.startswith("https://")):
 				target = "http://" + target
-			os.system("reset")
+			os.system("reset -Q")
 			print("[+] Cloudflare cookie scraper ")
 			time.sleep(1.5)
 
@@ -255,10 +255,13 @@ def fun():
 			except ValueError:
 				print('[X] Unable to find Cloudflare cookies. This website does not have Cloudflare IUAM enabled.')
 
+			except Exception:
+				print('[X] Could not connect to ' + target + '. Check the domain and try again.')
+
 		elif choice == ("9"):
 			try:
 				target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower()
-				os.system("reset")
+				os.system("reset -Q")
 				print("\033[34m[~] Scanning Link Grabber: \033[0m\n" + target)
 				time.sleep(2)
 				if not (target.startswith("http://") or target.startswith("https://")):
@@ -304,7 +307,7 @@ def fun():
 				response = urllib.request.urlopen(url + target)
 				data = response.read()
 				jso = json.loads(data)
-				os.system("reset")
+				os.system("reset -Q")
 				print("\033[34m[~] Searching IP Location Finder: \033[0m".format(url) + target)
 				time.sleep(1.5)
 
@@ -328,7 +331,7 @@ def fun():
 				target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower()
 				if not (target.startswith("http://") or target.startswith("https://")):
 					target = "https://" + target
-				os.system("reset")
+				os.system("reset -Q")
 				print("\033[34m[~] Detecting CMS with Identified Technologies and Custom Headers from target url: \033[0m")
 				time.sleep(5)
 				obj = webtech.WebTech()
@@ -341,7 +344,7 @@ def fun():
 		elif choice == ("12"):
 			try:
 				target = input("\033[1;91m[+] Enter Domain or IP Address: \033[1;m").lower()
-				os.system("reset")
+				os.system("reset -Q")
 				print("\033[34m[~] Searching for Traceroute \033[0m".format(target) + target)
 				print(">> This will take a moment... Get some coffee << )\n")
 				time.sleep(5)
@@ -355,7 +358,7 @@ def fun():
 
 		elif choice == ("13"):
 			target = input("\033[1;91m[+] Enter Domain: \033[1;m").lower()
-			os.system("reset")
+			os.system("reset -Q")
 			print("\033[34m[~] Start crawler... \033[0m")
 			time.sleep(5)
 			print("[+] Target: " + target)
@@ -375,12 +378,12 @@ def fun():
 				print("[+] Extract links: \n" + '\n'.join(link) + "\n")
 				print("[+] Robots.txt: \n" + robots)
 
-			except KeyError:
-				pass
+			except Exception:
+				print('[X] Could not connect to ' + target + '. Check the domain and try again.')
 
 		elif choice == ("14"):
 			target = input("\033[1;91m[+] Enter Domain: \033[0m")
-			os.system("reset")
+			os.system("reset -Q")
 			print("\033[34m[~] Scanning Certificate Transparency log monitor: \033[0m\n" + target)
 			time.sleep(1.5)
 			print("[+] Target: " + target)
@@ -397,8 +400,8 @@ def fun():
 				for name in sorted(names):
 					print(name)
 
-			except KeyError:
-				pass
+			except Exception:
+				print('[X] Could not connect to ' + target + '. Check the domain and try again.')
 
 		elif choice == ("15"):
 			time.sleep(1)
@@ -406,7 +409,7 @@ def fun():
 			sys.exit()
 
 		else:
-			os.system("reset")
+			os.system("reset -Q")
 			print("\033[1;31m[-] Invalid option..! \033[1;m")
 
 
