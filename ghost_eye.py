@@ -390,34 +390,16 @@ def fun():
 			try:
 				headers = {
 				'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36', }
+				results = requests.get('https://crt.sh/?q=%25.' + target + '&output=json', headers=headers, timeout=60)
 				names = set()
-				after = ""
-				whole = True
-				while True:
-					url = 'https://api.certspotter.com/v1/issuances?domain=' + target + '&include_subdomains=true&expand=dns_names'
-					if after:
-						url = url + '&after=' + after
-					results = requests.get(url, headers=headers)
-					if results.status_code != 200:
-						try:
-							print("\033[1;31m[-] CertSpotter: " + results.json()['message'] + "\033[1;m")
-						except Exception:
-							print("\033[1;31m[-] CertSpotter answered with status " + str(results.status_code) + "\033[1;m")
-						whole = False
-						break
-					certs = results.json()
-					if not certs:
-						break
-					for issuance in certs:
-						for name in issuance.get('dns_names', []):
-							name = name.lstrip('*.')
-							if target in name:
-								names.add(name)
-					after = str(certs[-1]['id'])
+				for cert in results.json():
+					for name in cert.get('name_value', '').splitlines():
+						name = name.lstrip('*.')
+						if target in name:
+							names.add(name)
 				for name in sorted(names):
 					print(name)
-				if names and not whole:
-					print("\033[1;31m[-] This list is not complete. Try again later for the rest.\033[1;m")
+				print("\n[+] " + str(len(names)) + " unique subdomains found")
 
 			except Exception:
 				print('[X] Could not connect to ' + target + '. Check the domain and try again.')
