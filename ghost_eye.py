@@ -17,7 +17,7 @@
 
 # ===== #
 # Created July 2019 | Copyright (c) 2019 - 2021 Jolanda de Koff.
-# Update April 2021
+# Update September 2026
 # ===== #
 
 ########################################################################
